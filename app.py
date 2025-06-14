@@ -55,6 +55,15 @@ def delete_todo(todo_id):
     except Exception as e:
         flash(f'Error deleting todo: {str(e)}', 'error')
     return redirect(url_for('todo'))
+    @app.route('/submittodoitem', methods=['POST'])
+def submittodoitem():
+    data = request.json
+    db.todo.insert_one({
+        "itemName": data['itemName'],
+        "itemDescription": data['itemDescription']
+    })
+    return jsonify({"message": "Item saved successfully"})
+
 
 @app.route('/api')
 def api():
